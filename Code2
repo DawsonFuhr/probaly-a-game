@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #start-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      #start-button {
+        padding: 10px 20px;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="start-screen">
+      <h1>Welcome to the Game!</h1>
+      <button id="start-button">Start</button>
+    </div>
+    <div id="game-screen" style="display: none;">
+      <canvas id="game-canvas"></canvas>
+    </div>
+    <script>
+      const startButton = document.getElementById("start-button");
+      const startScreen = document.getElementById("start-screen");
+      const gameScreen = document.getElementById("game-screen");
+      const gameCanvas = document.getElementById("game-canvas");
+
+      startButton.addEventListener("click", startGame);
+
+      function startGame() {
+        startScreen.style.display = "none";
+        gameScreen.style.display = "block";
+
+        // Initialize the game on the canvas
+        const ctx = gameCanvas.getContext("2d");
+        ctx.fillStyle = "red";
+        ctx.fillRect(0, 0, 50, 50);
+
+        // Handle movement with WSAD keys
+        document.addEventListener("keydown", handleMovement);
+
+        let playerX = 0;
+        let playerY = 0;
+
+        function handleMovement(event) {
+          if (event.code === "KeyW") {
+            playerY -= 50;
+          } else if (event.code === "KeyS") {
+            playerY += 50;
+          } else if (event.code === "KeyA") {
+            playerX -= 50;
+          } else if (event.code === "KeyD") {
+            playerX += 50;
+          }
+
+          // Clear the canvas and redraw the player
+          ctx.clearRect(0, 0, 1000, 1000);
+          ctx.fillRect(playerX, playerY, 50, 50);
+        }
+      }
+    </script>
+  </body>
+</html>
